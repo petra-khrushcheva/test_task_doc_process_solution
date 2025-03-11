@@ -1,0 +1,7 @@
+services:
+
+  backend:
+    container_name: doc_process_backend
+    build: .
+    image: doc_process_backend
+    env_file: .env
