@@ -48,3 +48,13 @@ class DocumentModel(BaseModel):
         if isinstance(value, str):
             return json.loads(value)
         return value
+
+
+class DataModel(BaseModel):
+    """Модель объекта из таблицы data."""
+
+    object: str
+    owner: str
+    status: int
+    level: int
+    parent: str | None = None
