@@ -66,7 +66,7 @@ async def update_objects(
                 if obj_value != update_data.old:
                     break
         else:
-            matched_objects_ids.append(obj.object_id)
+            matched_objects_ids.append(obj.object)
 
     if not matched_objects_ids:
         logging.info(
