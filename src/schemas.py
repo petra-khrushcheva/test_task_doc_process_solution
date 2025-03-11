@@ -1,5 +1,4 @@
 import json
-from typing import List, Optional, Union
 
 from pydantic import BaseModel, field_validator
 
@@ -7,15 +6,15 @@ from pydantic import BaseModel, field_validator
 class FieldUpdate(BaseModel):
     """Модель для хранения старого и нового значения поля."""
 
-    old: Union[str, int, List[Union[str, int]]]
-    new: Union[str, int]
+    old: str | int | list[str | int]
+    new: str | int
 
 
 class OperationDetails(BaseModel):
     """Модель деталей операции: изменение владельца или статуса."""
 
-    owner: Optional[FieldUpdate] = None
-    status: Optional[FieldUpdate] = None
+    owner: FieldUpdate | None = None
+    status: FieldUpdate | None = None
 
 
 class DocumentMeta(BaseModel):
@@ -29,8 +28,8 @@ class DocumentData(BaseModel):
     """Основные данные документа, включая объекты и детали операции."""
 
     document_data: DocumentMeta
-    objects: List[str]
-    operation_details: Optional[OperationDetails] = None
+    objects: list[str]
+    operation_details: OperationDetails | None = None
 
 
 class DocumentModel(BaseModel):
@@ -40,7 +39,7 @@ class DocumentModel(BaseModel):
     recieved_at: str
     document_type: str
     document_data: DocumentData
-    processed_at: Optional[str] = None
+    processed_at: str | None = None
 
     @field_validator("document_data", mode="before")
     @classmethod
@@ -49,6 +48,3 @@ class DocumentModel(BaseModel):
         if isinstance(value, str):
             return json.loads(value)
         return value
-
-
-# ✅ Используем asyncio.run(main()), чтобы запустить код.
