@@ -1,3 +1,4 @@
+import logging
 import pathlib
 from typing import Dict
 
@@ -25,6 +26,10 @@ class DatabaseConfig(BaseModel):
         return self.model_dump()
 
 
+class LogConfig(BaseModel):
+    level: str = logging.INFO
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=f"{pathlib.Path(__file__).parents[1]}/.env",
@@ -50,3 +55,7 @@ class Settings(BaseSettings):
             host=self.postgres_host,
             port=self.postgres_port,
         ).as_dict()
+
+    @property
+    def log_config(self) -> LogConfig:
+        return LogConfig()
