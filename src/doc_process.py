@@ -134,6 +134,6 @@ async def process_document(db_config: dict[str, str]) -> bool:
                 logging.info(f"Документ {doc.doc_id} обработан.")
                 return True
 
-    except Exception as e:
-        logging.error(f"Ошибка при обработке документа: {e}")
+    except Exception:
+        logging.exception("Ошибка при обработке документа: ")
         return False
