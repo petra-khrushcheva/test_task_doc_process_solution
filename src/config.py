@@ -39,12 +39,14 @@ class Settings(BaseSettings):
     postgres_user: str
 
     @property
-    def database_config(self) -> DatabaseConfig:
-        """Создаёт объект конфигурации базы данных."""
+    def asyncpg_database_config(self) -> DatabaseConfig:
+        """
+        Создаёт объект конфигурации базы данных в виде словаря для asyncpg.
+        """
         return DatabaseConfig(
             user=self.postgres_user,
             password=self.postgres_password,
             database=self.postgres_db,
             host=self.postgres_host,
             port=self.postgres_port,
-        )
+        ).as_dict()
