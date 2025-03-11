@@ -1,14 +1,28 @@
 import pathlib
+from typing import Dict
 
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DatabaseConfig(BaseModel):
-    database_url: str
-    echo: bool = False
-    pool_size: int = 10
-    max_overflow: int = 20
+    """Конфигурация подключения к базе данных для asyncpg."""
+
+    user: str
+    password: str
+    database: str
+    host: str
+    port: int
+    min_size: int = 1
+    max_size: int = 10
+    timeout: int = 10
+
+    def as_dict(self) -> Dict[str, str]:
+        """
+        Возвращает конфигурацию в формате,
+        который принимает asyncpg.create_pool().
+        """
+        return self.model_dump()
 
 
 class Settings(BaseSettings):
@@ -25,16 +39,12 @@ class Settings(BaseSettings):
     postgres_user: str
 
     @property
-    def database_url(self) -> str:
-        return (
-            f"postgresql+asyncpg://{self.postgres_user}:"
-            f"{self.postgres_password}@{self.postgres_host}:"
-            f"{self.postgres_port}/{self.postgres_db}"
-        )
-
-    @property
     def database_config(self) -> DatabaseConfig:
-        """Возвращает объект конфигурации базы данных."""
+        """Создаёт объект конфигурации базы данных."""
         return DatabaseConfig(
-            database_url=self.database_url,
+            user=self.postgres_user,
+            password=self.postgres_password,
+            database=self.postgres_db,
+            host=self.postgres_host,
+            port=self.postgres_port,
         )
