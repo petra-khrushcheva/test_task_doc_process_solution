@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from pydantic import BaseModel, field_validator
@@ -36,10 +37,10 @@ class DocumentModel(BaseModel):
     """Полная модель документа, включая метаинформацию и статус обработки."""
 
     doc_id: str
-    recieved_at: str
+    recieved_at: datetime.datetime
     document_type: str
     document_data: DocumentData
-    processed_at: str | None = None
+    processed_at: datetime.datetime | None = None
 
     @field_validator("document_data", mode="before")
     @classmethod
