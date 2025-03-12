@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     postgres_user: str
 
     @property
-    def asyncpg_database_config(self) -> DatabaseConfig:
+    def asyncpg_database_config(self) -> dict:
         """
         Создаёт объект конфигурации базы данных в виде словаря для asyncpg.
         """
