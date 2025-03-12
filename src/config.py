@@ -27,7 +27,7 @@ class DatabaseConfig(BaseModel):
 
 
 class LogConfig(BaseModel):
-    level: str = logging.INFO
+    level: int = logging.INFO
 
 
 class Settings(BaseSettings):
