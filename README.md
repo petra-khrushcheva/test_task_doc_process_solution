@@ -30,7 +30,7 @@
 
 1. **Клонирование репозитория**:
    ```bash
-   git@github.com:petra-khrushcheva/test_task_doc_process_solution.git
+   git clone git@github.com:petra-khrushcheva/test_task_doc_process_solution.git
    cd test_task_doc_process_solution
    ```
 
